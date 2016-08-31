@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ProfileActivity extends AppCompatActivity {
     public static final String TAG = "ProfileActivity";
@@ -60,11 +65,11 @@ public class ProfileActivity extends AppCompatActivity {
     private void updateUI() {
         setProfileImage();
 
-        
+        // TODO: get data from Firebase database, and insert it into the UI
 
         fullName.setText(currentUser.getDisplayName());
         age.setText("");
-        location.setText("");
+//        location.setText("");
 
         for(UserInfo info : currentUser.getProviderData()) {
             Log.d(TAG, info.toString());
@@ -72,21 +77,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setProfileImage() {
-        usersDatabase.child(currentUser.getUid()).child(getString(R.string.facebook_user_id)).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String facebookId = dataSnapshot.getValue(String.class);
-
-                String photoUrl = "https://graph.facebook.com/" + facebookId + "/picture?height=500";
-
-                Picasso.with(ProfileActivity.this).load(photoUrl).into(profilePicture);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "Could not get Facebook user id from database");
-            }
-        });
+        Uri photoUrl = Profile.getCurrentProfile().getProfilePictureUri(500, 500);
+        Picasso.with(ProfileActivity.this).load(photoUrl).into(profilePicture);
     }
 
     public void buttonLogoutClick(View v) {

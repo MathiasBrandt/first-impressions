@@ -4,6 +4,16 @@
     <string name="facebook_provider_id">facebook.com</string>
     <string name="facebook_user_id">facebook_user_id</string>
     <string name="users_database_reference">users</string>
+
+    <!-- database keys -->
+    <string name="db_key_facebook_id">facebook_id</string>
+    <string name="db_key_location">location</string>
+    <string name="db_key_birth_month">birth_month</string>
+    <string name="db_key_age">age</string>
+    <string name="db_key_name">name</string>
+    <string name="db_key_photo_url">photo_url</string>
+
+
     <!--
         See:
         https://developers.facebook.com/docs/facebook-login/android
