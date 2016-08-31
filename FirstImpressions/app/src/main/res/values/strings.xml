@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">First Impressions</string>
     <string name="facebook_application_id" translatable="false">1726208447656916</string>
-
+    <string name="facebook_provider_id">facebook.com</string>
+    <string name="facebook_user_id">facebook_user_id</string>
+    <string name="users_database_reference">users</string>
     <!--
         See:
         https://developers.facebook.com/docs/facebook-login/android
@@ -10,5 +12,7 @@
     <array name="facebook_permissions">
         <item>public_profile</item>
         <item>email</item>
+        <item>user_birthday</item>
+        <item>user_location</item>
     </array>
 </resources>
