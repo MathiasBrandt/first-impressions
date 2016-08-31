@@ -35,27 +35,22 @@ import org.json.JSONObject;
 public class ProfileActivity extends AppCompatActivity {
     public static final String TAG = "ProfileActivity";
 
-    private DatabaseReference usersDatabase;
     private FirebaseUser currentUser;
 
     private ImageView imageViewProfilePicture;
     private TextView textViewFullName;
     private TextView textViewAge;
     private TextView textViewLocation;
-    private Button buttonLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        usersDatabase = FirebaseDatabase.getInstance().getReference(getString(R.string.users_database_reference));
-
         imageViewProfilePicture = (ImageView) findViewById(R.id.image_profile_picture);
         textViewFullName = (TextView) findViewById(R.id.textViewFullName);
         textViewAge = (TextView) findViewById(R.id.textViewAge);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -63,7 +58,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        DatabaseReference userNode = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+        // get a database reference to the current user
+        DatabaseReference userNode = FirebaseDatabase.getInstance().getReference(getString(R.string.db_key_users)).child(currentUser.getUid());
+
         userNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
