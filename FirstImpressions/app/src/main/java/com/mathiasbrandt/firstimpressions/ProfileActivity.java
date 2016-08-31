@@ -38,10 +38,10 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference usersDatabase;
     private FirebaseUser currentUser;
 
-    private ImageView profilePicture;
-    private TextView fullName;
-    private TextView age;
-    private TextView location;
+    private ImageView imageViewProfilePicture;
+    private TextView textViewFullName;
+    private TextView textViewAge;
+    private TextView textViewLocation;
     private Button buttonLogout;
 
     @Override
@@ -51,10 +51,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         usersDatabase = FirebaseDatabase.getInstance().getReference(getString(R.string.users_database_reference));
 
-        profilePicture = (ImageView) findViewById(R.id.image_profile_picture);
-        fullName = (TextView) findViewById(R.id.textViewFullName);
-        age = (TextView) findViewById(R.id.textViewAge);
-        location = (TextView) findViewById(R.id.textViewLocation);
+        imageViewProfilePicture = (ImageView) findViewById(R.id.image_profile_picture);
+        textViewFullName = (TextView) findViewById(R.id.textViewFullName);
+        textViewAge = (TextView) findViewById(R.id.textViewAge);
+        textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -63,22 +63,26 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        setProfileImage();
+        DatabaseReference userNode = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+        userNode.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String photoUrl = dataSnapshot.child(getString(R.string.db_key_photo_url)).getValue(String.class);
+                String age = dataSnapshot.child(getString(R.string.db_key_age)).getValue(String.class);
+                String name = dataSnapshot.child(getString(R.string.db_key_name)).getValue(String.class);
+                String location = dataSnapshot.child(getString(R.string.db_key_location)).getValue(String.class);
 
-        // TODO: get data from Firebase database, and insert it into the UI
+                Picasso.with(ProfileActivity.this).load(photoUrl).into(imageViewProfilePicture);
+                textViewAge.setText(age);
+                textViewFullName.setText(name);
+                textViewLocation.setText(location);
+            }
 
-        fullName.setText(currentUser.getDisplayName());
-        age.setText("");
-//        location.setText("");
-
-        for(UserInfo info : currentUser.getProviderData()) {
-            Log.d(TAG, info.toString());
-        }
-    }
-
-    private void setProfileImage() {
-        Uri photoUrl = Profile.getCurrentProfile().getProfilePictureUri(500, 500);
-        Picasso.with(ProfileActivity.this).load(photoUrl).into(profilePicture);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "Could not access user node in database");
+            }
+        });
     }
 
     public void buttonLogoutClick(View v) {
