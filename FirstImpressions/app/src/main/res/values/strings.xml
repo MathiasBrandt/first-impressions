@@ -24,5 +24,9 @@
         <item>email</item>
         <item>user_birthday</item>
         <item>user_location</item>
+        <item>user_work_history</item>
+        <item>user_education_history</item>
     </array>
+    <string name="facebook_permission_fields">id,birthday,location,name,work,education</string>
+    <string name="facebook_key_fields">fields</string>
 </resources>

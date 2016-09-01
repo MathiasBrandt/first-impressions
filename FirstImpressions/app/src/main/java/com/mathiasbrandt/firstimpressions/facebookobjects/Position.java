@@ -1,12 +1,12 @@
-package com.mathiasbrandt.firstimpressions;
+package com.mathiasbrandt.firstimpressions.facebookobjects;
 
 /**
  * Created by brandt on 01/09/2016.
  */
 
-public class Location {
-    String id;
-    String name;
+public class Position {
+    private String id;
+    private String name;
 
     public String getId() {
         return id;

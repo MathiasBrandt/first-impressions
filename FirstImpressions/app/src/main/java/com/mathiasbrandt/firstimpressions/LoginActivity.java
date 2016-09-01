@@ -1,8 +1,8 @@
 package com.mathiasbrandt.firstimpressions;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -13,15 +13,11 @@ import com.facebook.Profile;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.mathiasbrandt.firstimpressions.facebookobjects.User;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
@@ -41,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null) {
             // session exists
+            saveFacebookData();
             goToProfileActivity();
         } else {
             // user is not signed in. Start FirebaseUI sign in flow
@@ -79,16 +76,18 @@ public class LoginActivity extends AppCompatActivity {
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject userData, GraphResponse response) {
-                            Gson gson = new Gson();
-                            User user = gson.fromJson(userData.toString(), User.class);
-                            user.setPhotoUrl(Profile.getCurrentProfile().getProfilePictureUri(PROFILE_PICTURE_SIZE, PROFILE_PICTURE_SIZE).toString());
-                            userNode.setValue(user);
+                        Log.d(TAG, userData.toString());
+
+                        Gson gson = new Gson();
+                        User user = gson.fromJson(userData.toString(), User.class);
+                        user.setPhotoUrl(Profile.getCurrentProfile().getProfilePictureUri(PROFILE_PICTURE_SIZE, PROFILE_PICTURE_SIZE).toString());
+                        userNode.setValue(user);
                     }
                 }
         );
 
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,birthday,location,name");
+        parameters.putString(getString(R.string.facebook_key_fields), getString(R.string.facebook_permission_fields));
         request.setParameters(parameters);
         request.executeAsync();
     }

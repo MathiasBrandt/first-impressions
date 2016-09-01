@@ -1,6 +1,9 @@
-package com.mathiasbrandt.firstimpressions;
+package com.mathiasbrandt.firstimpressions.facebookobjects;
 
+import com.google.android.gms.auth.account.WorkAccount;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class User {
     private String age;
@@ -11,6 +14,24 @@ public class User {
     private Location location;
     private String name;
     private String photoUrl;
+    private List<WorkExperience> work;
+    private List<EducationExperience> education;
+
+    public List<WorkExperience> getWork() {
+        return work;
+    }
+
+    public void setWork(List<WorkExperience> work) {
+        this.work = work;
+    }
+
+    public List<EducationExperience> getEducation() {
+        return education;
+    }
+
+    public void setEducation(List<EducationExperience> education) {
+        this.education = education;
+    }
 
     public String getAge() {
         return age;
