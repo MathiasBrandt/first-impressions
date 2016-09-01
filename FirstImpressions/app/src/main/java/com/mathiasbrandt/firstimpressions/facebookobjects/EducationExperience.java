@@ -8,10 +8,18 @@ import java.util.List;
 
 public class EducationExperience {
     private String id;
-    private School school;
+    private Node school;
     private String type;
-    private Year year;
-    private Degree degree;
+    private Node year;
+    private Node degree;
+
+    public Node getSchool() {
+        return school;
+    }
+
+    public void setSchool(Node school) {
+        this.school = school;
+    }
 
     public String getId() {
         return id;
@@ -19,14 +27,6 @@ public class EducationExperience {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
     }
 
     public String getType() {
@@ -37,19 +37,20 @@ public class EducationExperience {
         this.type = type;
     }
 
-    public Year getYear() {
+    public Node getYear() {
         return year;
     }
 
-    public void setYear(Year year) {
+    public void setYear(Node year) {
         this.year = year;
     }
 
-    public Degree getDegree() {
+    public Node getDegree() {
         return degree;
     }
 
-    public void setDegree(Degree degree) {
+    public void setDegree(Node degree) {
         this.degree = degree;
     }
+
 }

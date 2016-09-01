@@ -46,6 +46,22 @@
         android:layout_marginTop="13dp"
         android:id="@+id/textViewLocation" />
 
+    <TextView
+        android:id="@+id/textViewWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewLocation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"/>
+
+    <TextView
+        android:id="@+id/textViewEducation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWork"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"/>
+
     <Button
         android:text="Logout"
         android:layout_width="wrap_content"

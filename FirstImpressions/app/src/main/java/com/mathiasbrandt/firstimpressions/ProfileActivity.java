@@ -32,6 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textViewFullName;
     private TextView textViewAge;
     private TextView textViewLocation;
+    private TextView textViewWork;
+    private TextView textViewEducation;
     private ProgressBar progressBarProfile;
 
     @Override
@@ -43,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
         textViewFullName = (TextView) findViewById(R.id.textViewFullName);
         textViewAge = (TextView) findViewById(R.id.textViewAge);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewWork = (TextView) findViewById(R.id.textViewWork);
+        textViewEducation = (TextView) findViewById(R.id.textViewEducation);
         progressBarProfile = (ProgressBar) findViewById(R.id.progressBarProfile);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -63,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
                 textViewAge.setText(user.getBirthMonth());
                 textViewFullName.setText(user.getName());
                 textViewLocation.setText(user.getLocation().getName());
+                textViewWork.setText(user.getWork().get(0).getPosition().getName() + ", " + user.getWork().get(0).getEmployer().getName());
+                textViewEducation.setText(user.getEducation().get(0).getSchool().getName());
 
                 progressBarProfile.setVisibility(View.GONE);
             }

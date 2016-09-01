@@ -11,7 +11,7 @@ public class User {
     private String birthMonth;
     @SerializedName("id")
     private String facebookId;
-    private Location location;
+    private Node location;
     private String name;
     private String photoUrl;
     private List<WorkExperience> work;
@@ -57,11 +57,11 @@ public class User {
         this.facebookId = facebookId;
     }
 
-    public Location getLocation() {
+    public Node getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(Node location) {
         this.location = location;
     }
 

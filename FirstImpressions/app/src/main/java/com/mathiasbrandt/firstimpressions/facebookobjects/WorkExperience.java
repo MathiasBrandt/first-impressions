@@ -6,15 +6,16 @@ package com.mathiasbrandt.firstimpressions.facebookobjects;
 
 public class WorkExperience {
     private String id;
-    private Employer employer;
-    private Position position;
+    private Node location;
+    private Node employer;
+    private Node position;
 
-    public Position getPosition() {
-        return position;
+    public Node getLocation() {
+        return location;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setLocation(Node location) {
+        this.location = location;
     }
 
     public String getId() {
@@ -25,11 +26,19 @@ public class WorkExperience {
         this.id = id;
     }
 
-    public Employer getEmployer() {
+    public Node getEmployer() {
         return employer;
     }
 
-    public void setEmployer(Employer employer) {
+    public void setEmployer(Node employer) {
         this.employer = employer;
+    }
+
+    public Node getPosition() {
+        return position;
+    }
+
+    public void setPosition(Node position) {
+        this.position = position;
     }
 }

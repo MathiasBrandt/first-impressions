@@ -4,7 +4,7 @@ package com.mathiasbrandt.firstimpressions.facebookobjects;
  * Created by brandt on 01/09/2016.
  */
 
-public class Position {
+public class Node {
     private String id;
     private String name;
 
