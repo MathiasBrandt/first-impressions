@@ -28,11 +28,9 @@
         android:layout_below="@+id/image_profile_picture"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:id="@+id/textViewFullName"
-        android:text="Full name" />
+        android:id="@+id/textViewFullName" />
 
     <TextView
-        android:text="Age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewAge"
@@ -41,7 +39,6 @@
         android:layout_marginTop="13dp"/>
 
     <TextView
-        android:text="Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewAge"
@@ -57,4 +54,13 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonLogout"
         android:onClick="buttonLogoutClick" />
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarProfile"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

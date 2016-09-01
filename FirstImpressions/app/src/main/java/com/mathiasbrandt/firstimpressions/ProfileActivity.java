@@ -3,12 +3,14 @@ package com.mathiasbrandt.firstimpressions;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -41,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textViewFullName;
     private TextView textViewAge;
     private TextView textViewLocation;
+    private ProgressBar progressBarProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         textViewFullName = (TextView) findViewById(R.id.textViewFullName);
         textViewAge = (TextView) findViewById(R.id.textViewAge);
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        progressBarProfile = (ProgressBar) findViewById(R.id.progressBarProfile);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -64,15 +68,14 @@ public class ProfileActivity extends AppCompatActivity {
         userNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String photoUrl = dataSnapshot.child(getString(R.string.db_key_photo_url)).getValue(String.class);
-                String age = dataSnapshot.child(getString(R.string.db_key_age)).getValue(String.class);
-                String name = dataSnapshot.child(getString(R.string.db_key_name)).getValue(String.class);
-                String location = dataSnapshot.child(getString(R.string.db_key_location)).getValue(String.class);
+                User user = dataSnapshot.getValue(User.class);
 
-                Picasso.with(ProfileActivity.this).load(photoUrl).into(imageViewProfilePicture);
-                textViewAge.setText(age);
-                textViewFullName.setText(name);
-                textViewLocation.setText(location);
+                Picasso.with(ProfileActivity.this).load(user.getPhotoUrl()).into(imageViewProfilePicture);
+                textViewAge.setText(user.getBirthMonth());
+                textViewFullName.setText(user.getName());
+                textViewLocation.setText(user.getLocation().getName());
+
+                progressBarProfile.setVisibility(View.GONE);
             }
 
             @Override

@@ -38,6 +38,9 @@ dependencies {
 
     // facebook sdk
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+
+    // gson for parsing json data
+    compile 'com.google.code.gson:gson:2.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

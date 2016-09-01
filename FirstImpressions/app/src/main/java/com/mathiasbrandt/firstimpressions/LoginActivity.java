@@ -16,6 +16,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +28,7 @@ import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
+    public static final int PROFILE_PICTURE_SIZE = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null) {
             // session exists
-            saveFacebookData(); // TODO: delete this
             goToProfileActivity();
         } else {
             // user is not signed in. Start FirebaseUI sign in flow
@@ -74,19 +78,11 @@ public class LoginActivity extends AppCompatActivity {
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
-                    public void onCompleted(JSONObject data, GraphResponse response) {
-                        Log.d(TAG, data.toString());
-
-                        try {
-                            userNode.child(getString(R.string.db_key_facebook_id)).setValue(data.getString("id"));
-                            userNode.child(getString(R.string.db_key_location)).setValue(data.getJSONObject("location").getString("name"));
-                            userNode.child(getString(R.string.db_key_birth_month)).setValue(data.getString("birthday"));
-                            userNode.child(getString(R.string.db_key_age)).setValue(data.getString("birthday"));
-                            userNode.child(getString(R.string.db_key_photo_url)).setValue(Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString());
-                            userNode.child(getString(R.string.db_key_name)).setValue(data.getString("name"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onCompleted(JSONObject userData, GraphResponse response) {
+                            Gson gson = new Gson();
+                            User user = gson.fromJson(userData.toString(), User.class);
+                            user.setPhotoUrl(Profile.getCurrentProfile().getProfilePictureUri(PROFILE_PICTURE_SIZE, PROFILE_PICTURE_SIZE).toString());
+                            userNode.setValue(user);
                     }
                 }
         );
